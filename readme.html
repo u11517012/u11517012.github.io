@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作業五 | 修改說明與觀察紀錄</title>
+    <style>
+        :root {
+            --bg: #F7F4EF;
+            --card: #EFECE6;
+            --text: #4A453F;
+            --muted: #8C857B;
+            --line: #D9D2C7;
+            --highlight: #17596E;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 680px;
+            width: 100%;
+        }
+        nav {
+            margin-bottom: 24px;
+        }
+        .back-btn {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .back-btn:hover {
+            color: var(--text);
+        }
+        header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.6rem;
+            margin: 0 0 8px 0;
+            color: var(--highlight);
+        }
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 30px 0 15px 0;
+        }
+        .box {
+            background-color: var(--card);
+            padding: 20px 24px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        .box h3 {
+            margin-top: 0;
+            font-size: 1.05rem;
+            color: var(--highlight);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 8px;
+        }
+        p {
+            margin: 8px 0;
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        .highlight-text {
+            background-color: #E5EEEB;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #17596E;
+        }
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <a href="digitech-homework.html" class="back-btn">← 返回作業列表</a>
+    </nav>
+
+    <header>
+        <h1>作業五：修改說明與觀察紀錄</h1>
+        <p style="color: var(--muted); margin: 0; font-size: 0.9rem;">活動 05～09 學習紀錄與作業案例說明</p>
+    </header>
+
+    <div class="section-title">一、各活動觀察紀錄</div>
+
+    <div class="box">
+        <h3>活動 05 觀察</h3>
+        <p>我把標題 color 改為 <span class="highlight-text">#17596E</span>、卡片 border 改為 <span class="highlight-text">#75B89A</span>，所以畫面上的標題變成了深藍綠色，卡片邊框也換成了對應的草綠色調。</p>
+    </div>
+
+    <div class="box">
+        <h3>活動 06 觀察</h3>
+        <p>我選 <span class="highlight-text">D 版型</span>，因為希望讀者先順暢閱讀主要內容，側欄則固定在左側方便隨時導覽。</p>
+    </div>
+
+    <div class="box">
+        <h3>活動 07 觀察</h3>
+        <p>我選 <span class="highlight-text">cover</span>，因為可以讓三張卡片的封面圖片高度一致且不變形。</p>
+    </div>
+
+    <div class="box">
+        <h3>活動 08 觀察</h3>
+        <p>在 <span class="highlight-text">600px 窄視窗</span> 看到卡片擠在一起且有橫向捲軸；修正後轉為單欄排列且內容不超出畫面。</p>
+    </div>
+
+    <div class="box">
+        <h3>活動 09 觀察紀錄</h3>
+        <ul>
+            <li><b>檢查方式：</b> WAVE 擴充功能 / 本機檔案檢查</li>
+            <li><b>檢查的檔案：</b> 09-css-accessibility.html</li>
+            <li><b>第一次看到的問題與位置：</b> .intro 文字顏色 #bbbbbb 低對比度、暱稱欄位前只有 span 無 label 關聯</li>
+            <li><b>第一次 Errors／Contrast Errors 數量：</b> 1 個 Error、1 個 Contrast Error</li>
+            <li><b>我手動修改的 HTML／CSS：</b>
+                <ol>
+                    <li>CSS 修改：將 .intro 的 color 改為 #243d46（提高對比度至 11.47:1）</li>
+                    <li>HTML 修改：把 &lt;span&gt;你的暱稱&lt;/span&gt; 改為 &lt;label for="name"&gt;你的暱稱&lt;/label&gt;</li>
+                    <li>CSS 修改：新增 :focus-visible 外框樣式，確保鍵盤 Focus 可見</li>
+                    <li>HTML 修改：在狀態圓點旁補上可見文字「尚有名額」</li>
+                </ol>
+            </li>
+            <li><b>第二次 Errors／Contrast Errors 數量：</b> 0 個 Error、0 個 Contrast Error</li>
+            <li><b>指定兩項問題是否已排除：</b> 已順利排除</li>
+            <li><b>其他尚待處理的問題：</b> 無</li>
+            <li><b>鍵盤焦點、狀態文字與 200% 放大檢查結果：</b> Tab 鍵能順利切換焦點並顯示外框，狀態包含文字提示，放大 200% 畫面未破版且欄位仍可正常使用。</li>
+        </ul>
+    </div>
+
+    <div class="section-title">二、選擇繳交案例（活動 08）</div>
+
+    <div class="box">
+        <p><b>我選擇的活動：</b> 活動 08</p>
+        <p><b>原本有什麼問題，或我想改善什麼：</b><br>原本的網頁固定寬度 960px，在手機或窄視窗觀看時會產生橫向捲軸，輸入框也固定 420px 容易超出畫面。</p>
+        
+        <p><b>我親手修改／告訴 Agent 的具體要求：</b></p>
+        <p>請幫我將 08-css-rwd.html 的版型修改為響應式網頁設計（RWD）。具體要求如下：</p>
+        <ol>
+            <li>將原本固定寬度 960px 的 .page 主容器，改為寬度 100% 且最大寬度 960px（width: 100%; max-width: 960px;）。</li>
+            <li>將原本固定寬度 420px 的 input 輸入框，改為寬度 100% 且最大寬度 420px（width: 100%; max-width: 420px;）。</li>
+            <li>加入 Media Query 判斷，當螢幕寬度小於或等於 600px 時（@media (max-width: 600px)），將 .cards 的三欄卡片版型切換為 1fr（單欄垂直排列）。</li>
+            <li>修改後必須確保內容完整保留，且在手機視窗下不會出現橫向捲軸或內容溢出。</li>
+        </ol>
+
+        <p><b>完成了哪些修改：</b></p>
+        <ol>
+            <li>將 .page 的 width: 960px 改為 width: 100%; max-width: 960px;</li>
+            <li>將 input 寬度改為 width: 100%; max-width: 420px;</li>
+            <li>新增 @media (max-width: 600px) 規則，將 .cards 的 grid-template-columns 改為 1fr (單欄)。</li>
+        </ol>
+
+        <p><b>我如何檢查，實際看到什麼結果：</b><br>將瀏覽器視窗拉窄測試，當寬度小於 600px 時，三張卡片順利垂直排列成單欄，頁面與輸入框皆完美適應螢幕寬度，完全沒有出現橫向捲軸。</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 劉宜欣. All rights reserved.</p>
+    </footer>
+</div>
+
+</body>
+</html>
