@@ -11,6 +11,7 @@
             --text: #4A453F;
             --muted: #8C857B;
             --line: #D9D2C7;
+            --highlight: #17596E;
         }
         body {
             background-color: var(--bg);
@@ -33,21 +34,40 @@
             color: var(--muted);
             text-decoration: none;
             font-size: 0.95rem;
-            transition: color 0.2s;
+            transition: color 0.3s ease;
         }
         .back-btn:hover {
-            color: var(--text);
+            color: var(--highlight);
         }
         header {
             margin-bottom: 40px;
             border-bottom: 1px solid var(--line);
             padding-bottom: 20px;
         }
-        h1 {
-            font-size: 1.8rem;
-            margin: 0 0 10px 0;
+        
+        /* 動態打字機效果 */
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 2px solid var(--highlight);
+            white-space: nowrap;
             letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            animation: typing 2.5s steps(15, end), blink-caret 0.75s step-end infinite;
         }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--highlight); }
+        }
+
         p.subtitle {
             color: var(--muted);
             margin: 0;
@@ -63,50 +83,79 @@
             letter-spacing: 2px;
             margin-bottom: 15px;
         }
+        
+        /* 卡片樣式與 Hover 動畫 */
         .box {
             background-color: var(--card);
             padding: 24px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 20px;
+            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .box h3 {
             margin-top: 0;
             font-size: 1.1rem;
-        }
-        ul {
-            padding-left: 20px;
-            margin-bottom: 0;
-        }
-        li {
-            margin-bottom: 8px;
+            transition: color 0.3s ease;
         }
         .card-link {
             text-decoration: none;
             color: inherit;
             display: block;
         }
-        .card-link .box {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
+        .box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(74, 69, 63, 0.08);
+            border-color: var(--line);
         }
-        .card-link .box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        .card-link:hover .box h3 {
+            color: var(--highlight);
         }
+
+        /* 標籤微互動 */
         .card-tag {
             display: inline-block;
             font-size: 0.8rem;
             color: var(--muted);
             border: 1px solid var(--line);
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             margin-top: 8px;
+            transition: all 0.25s ease;
+            background-color: transparent;
         }
+        .card-tag:hover {
+            color: var(--bg);
+            background-color: var(--highlight);
+            border-color: var(--highlight);
+            transform: scale(1.02);
+        }
+
+        /* 頁尾樣式與計時小工具 */
         footer {
             text-align: center;
             color: var(--muted);
             font-size: 0.85rem;
             margin-top: 60px;
+        }
+        .time-badge {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: var(--card);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px dashed var(--line);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+        .time-badge:hover {
+            background-color: #e2ddd3;
+            transform: scale(1.05);
+        }
+        .highlight-num {
+            color: var(--highlight);
+            font-weight: bold;
         }
     </style>
 </head>
@@ -118,7 +167,9 @@
     </nav>
 
     <header>
-        <h1>數位科技概論作業</h1>
+        <div>
+            <span class="typewriter-text">數位科技概論作業</span>
+        </div>
         <p class="subtitle">大一課程作業與學習紀錄</p>
     </header>
 
@@ -159,20 +210,54 @@
 
         <!-- 作業五卡片 -->
         <div class="box">
-            <h3>作業五： CSS統一作業</h3>
+            <h3>作業五: CSS統一作業</h3>
             <div>
-                <a href="08-css-rwd-11517012.html" class="card-tag" style="text-decoration: none; display: inline-block; margin-bottom: 6px;">檢視 RWD 網頁 (08-css-rwd) →</a>
+                <a href="08-css-rwd-11517012.html" class="card-tag" style="text-decoration: none; margin-bottom: 6px;">檢視 RWD 網頁 (08-css-rwd) →</a>
             </div>
             <div>
-                <a href="readme.html" class="card-tag" style="text-decoration: none; display: inline-block;" target="_blank">檢視修改說明網頁 →</a>
+                <a href="readme.html" class="card-tag" style="text-decoration: none;" target="_blank">檢視修改說明網頁 →</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 劉宜欣. All rights reserved.</p>
+        <p style="margin-bottom: 4px;">&copy; 2026 劉宜欣. All rights reserved.</p>
+        
+        <!-- 頁尾計時與彩蛋按鈕 -->
+        <div class="time-badge" id="timeBadge" onclick="showEasterEgg()">
+            ⏱️ 你已經在此頁面停留了 <span id="timer" class="highlight-num">0 秒</span> (點我)
+        </div>
     </footer>
 </div>
+
+<!-- 頁尾功能腳本 -->
+<script>
+    let seconds = 0;
+    const timerElement = document.getElementById('timer');
+
+    // 每一秒更新一次時間
+    setInterval(() => {
+        seconds++;
+        if (seconds < 60) {
+            timerElement.textContent = `${seconds} 秒`;
+        } else {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerElement.textContent = `${mins} 分 ${secs} 秒`;
+        }
+    }, 1000);
+
+    // 點擊計時器跳出趣味對話框
+    function showEasterEgg() {
+        const quotes = [
+            "感謝你的認真觀看！給個高分吧 🥹",
+            "別算時間了，作業真的很用心做喔！✨",
+            "恭喜發現隱藏彩蛋！祝你有美好的一天 🎉"
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        alert(randomQuote);
+    }
+</script>
 
 </body>
 </html>
