@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>劉宜欣 | 個人作品集</title>
+    <title>劉宜欣 | 個人作品集 Portfolio</title>
+    <!-- 引入紙花特效庫 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --bg: #F7F4EF;
@@ -11,132 +13,370 @@
             --text: #4A453F;
             --muted: #8C857B;
             --line: #D9D2C7;
+            --highlight: #17596E;
+            --accent: #D9825B;
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.8;
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
         }
-        .container {
-            max-width: 680px;
+
+        /* 全域佈局容器 */
+        .layout-wrapper {
+            display: flex;
+            max-width: 960px;
             width: 100%;
+            padding: 40px 20px;
+            gap: 40px;
         }
+
+        /* 側邊導覽欄 (Sidebar) */
+        aside.sidebar {
+            width: 180px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-link:hover {
+            background-color: var(--card);
+            color: var(--highlight);
+            transform: translateX(4px);
+        }
+
+        /* 主要內容區域 */
+        .main-content {
+            flex-grow: 1;
+            max-width: 680px;
+        }
+
+        nav.top-nav {
+            margin-bottom: 20px;
+        }
+
+        .logo-btn {
+            color: var(--highlight);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-btn:hover {
+            opacity: 0.8;
+        }
+
         header {
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             border-bottom: 1px solid var(--line);
             padding-bottom: 20px;
         }
-        h1 {
-            font-size: 1.8rem;
-            margin: 0 0 10px 0;
+
+        /* 打字機效果 */
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 2px solid var(--highlight);
+            white-space: nowrap;
             letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            animation: typing 2.5s steps(15, end), blink-caret 0.75s step-end infinite;
         }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--highlight); }
+        }
+
         p.subtitle {
             color: var(--muted);
             margin: 0;
             font-size: 0.95rem;
         }
+
         section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
-        h2 {
+
+        h2.section-title {
             font-size: 1.1rem;
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 15px;
         }
-        .box {
-            background-color: var(--card);
-            padding: 24px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        }
-        .box h3 {
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
 
-        /* 可點擊卡片的樣式與 Hover 效果 */
-        .card-link {
+        /* 課程卡片樣式（主入口） */
+        .course-card-link {
             text-decoration: none;
             color: inherit;
             display: block;
         }
-        .card-link .box {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
-        }
-        .card-link .box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        .card-tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            color: var(--muted);
+
+        .course-card {
+            background-color: var(--card);
+            padding: 30px;
+            border-radius: 12px;
             border: 1px solid var(--line);
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-top: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
         }
 
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(74, 69, 63, 0.1);
+            border-color: var(--highlight);
+        }
+
+        .course-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
+            color: var(--text);
+            transition: color 0.3s ease;
+        }
+
+        .course-card-link:hover .course-card h3 {
+            color: var(--highlight);
+        }
+
+        .course-card p {
+            margin: 0 0 16px 0;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--highlight);
+        }
+
+        /* 頁尾與 Gmail 聯絡連結 */
         footer {
             text-align: center;
             color: var(--muted);
             font-size: 0.85rem;
             margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+        }
+
+        .email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--highlight);
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .email-link:hover {
+            background-color: var(--card);
+            text-decoration: underline;
+        }
+
+        .time-badge {
+            display: inline-block;
+            margin-top: 14px;
+            background-color: var(--card);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px dashed var(--line);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .time-badge:hover {
+            background-color: #e2ddd3;
+            transform: scale(1.05);
+        }
+
+        .highlight-num {
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        /* 響應式：手機版 */
+        @media (max-width: 768px) {
+            .layout-wrapper {
+                flex-direction: column;
+                padding: 20px 15px;
+                gap: 20px;
+            }
+
+            aside.sidebar {
+                width: 100%;
+                position: static;
+                border-bottom: 1px solid var(--line);
+                padding-bottom: 15px;
+            }
+
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>劉宜欣</h1>
-        <p class="subtitle">臺北市立大學 學習與媒材設計學系 | 個人作品集</p>
-    </header>
+<div class="layout-wrapper">
 
-    <section>
-        <h2>About Me</h2>
-        <div class="box">
-            <p style="margin-top: 0;">歡迎來到我的個人空間！我是<b>劉宜欣</b> 👋</p>
-            <p>目前就讀<b>臺北市立大學 學習與媒材設計學系</b>。我喜歡透過乾淨的排版與直覺的介面，讓使用者在探索數位內容時感到順暢與愉悅。</p>
-            <p>這裡是我記錄自己從零開始學習網頁設計、專案實作與成長的軌跡。歡迎隨時瀏覽我的作品！</p>
+    <!-- 側邊快速導覽欄 (Sidebar) -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Quick Menu</div>
+        <nav class="sidebar-nav">
+            <a href="#courses" class="sidebar-link">📚 課程作品</a>
+            <a href="#contact" class="sidebar-link">✉️ 聯絡資訊</a>
+        </nav>
+    </aside>
+
+    <!-- 主要頁面內容 -->
+    <main class="main-content">
+        <nav class="top-nav">
+            <a href="index.html" class="logo-btn">✦ YIXIN LIU</a>
+        </nav>
+
+        <header>
+            <div>
+                <span class="typewriter-text">Yixin's Portfolio</span>
+            </div>
+            <p class="subtitle">台北市立大學 學習與媒材設計學系</p>
+        </header>
+
+        <!-- 課程作品區塊：單一「數位科技概論」大卡片 -->
+        <section id="courses">
+            <h2 class="section-title">Courses</h2>
+
+            <a href="digitech-homework.html" class="course-card-link">
+                <div class="course-card">
+                    <h3>💻 數位科技概論作品集</h3>
+                    <p>包含作業一至作業五的完整網頁專案、RWD 響應式佈局以及開發修訂說明紀錄。</p>
+                    <div class="enter-btn">點擊進入查看作業列表 →</div>
+                </div>
+            </a>
+        </section>
+
+        <!-- 頁尾 Gmail 與計時器 -->
+        <footer id="contact">
+            <p style="margin-bottom: 4px;">&copy; 2026 劉宜欣. All rights reserved.</p>
             
-            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--line);">
-                <p style="margin: 0; font-size: 0.95rem;">
-                    ✉️ <b>聯絡信箱：</b>
-                    <a href="mailto:yi.xin961025.2@gmail.com" style="color: var(--text); font-weight: bold; text-decoration: underline;">
-                        yi.xin961025.2@gmail.com
-                    </a>
-                </p>
+            <div>
+                <a href="mailto:your-email@gmail.com" class="email-link">
+                    ✉️ 聯絡信箱：your-email@gmail.com
+                </a>
             </div>
-        </div>
-    </section>
 
-    <section>
-        <h2>Projects</h2>
-        
-        <!-- 僅保留數位科技概論作業卡片 -->
-        <a href="digitech-homework.html" class="card-link">
-            <div class="box">
-                <h3>大一 數位科技概論作業</h3>
-                <p>記錄在「數位科技概論」課程中所完成的各項作業、報告與心得展現。</p>
-                <span class="card-tag">點擊檢視內容 →</span>
+            <div class="time-badge" id="timeBadge" onclick="showEasterEgg()">
+                ⏱️ 你已經在此頁面停留了 <span id="timer" class="highlight-num">0 秒</span> (點我)
             </div>
-        </a>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 劉宜欣. All rights reserved.</p>
-    </footer>
+        </footer>
+    </main>
 </div>
+
+<script>
+    // 1. 頁尾計時器功能
+    let seconds = 0;
+    const timerElement = document.getElementById('timer');
+
+    setInterval(() => {
+        seconds++;
+        if (seconds < 60) {
+            timerElement.textContent = `${seconds} 秒`;
+        } else {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerElement.textContent = `${mins} 分 ${secs} 秒`;
+        }
+    }, 1000);
+
+    function showEasterEgg() {
+        const quotes = [
+            "感謝你的認真觀看！給個高分吧 🥹",
+            "別算時間了，作業真的很用心做喔！✨",
+            "你看得比教授還仔細耶！❤️",
+            "恭喜發現隱藏彩蛋！祝你有美好的一天 🎉"
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        alert(randomQuote);
+    }
+
+    // 2. 鍵盤彩蛋：Konami Code (上上下下左右左右ba)
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let userInput = [];
+
+    window.addEventListener('keydown', (e) => {
+        userInput.push(e.key);
+        userInput = userInput.slice(-konamiCode.length);
+
+        if (userInput.join(',').toLowerCase() === konamiCode.join(',').toLowerCase()) {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            setTimeout(() => {
+                alert('🎉 恭喜觸發隱藏的 Konami 秘技彩蛋！祝這學期 All Pass！');
+            }, 300);
+        }
+    });
+</script>
 
 </body>
 </html>
