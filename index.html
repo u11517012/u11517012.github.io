@@ -153,7 +153,14 @@
             margin-bottom: 15px;
         }
 
-        /* 課程卡片樣式（主入口） */
+        /* 課程卡片容器：垂直排列多張卡片 */
+        .course-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* 課程卡片樣式 */
         .course-card-link {
             text-decoration: none;
             color: inherit;
@@ -289,7 +296,7 @@
     <!-- 主要頁面內容 -->
     <main class="main-content">
         <nav class="top-nav">
-            <a href="index.html" class="logo-btn">✦ YIXIN LIU</a>
+            <a href="index.html" class="logo-btn">✦ YIXIN LIU 劉宜欣</a>
         </nav>
 
         <header>
@@ -299,17 +306,29 @@
             <p class="subtitle">台北市立大學 學習與媒材設計學系</p>
         </header>
 
-        <!-- 課程作品區塊：單一「數位科技概論」大卡片 -->
+        <!-- 課程作品區塊 -->
         <section id="courses">
             <h2 class="section-title">Courses</h2>
 
-            <a href="digitech-homework.html" class="course-card-link">
-                <div class="course-card">
-                    <h3>💻 數位科技概論作品集</h3>
-                    <p>包含作業一至作業五的完整網頁專案、RWD 響應式佈局以及開發修訂說明紀錄。</p>
-                    <div class="enter-btn">點擊進入查看作業列表 →</div>
-                </div>
-            </a>
+            <div class="course-list">
+                <!-- 作業一：數位科技概論作品集 -->
+                <a href="digitech-homework.html" class="course-card-link">
+                    <div class="course-card">
+                        <h3>💻 數位科技概論作品集</h3>
+                        <p>包含作業一至作業五的完整網頁專案、RWD 響應式佈局以及開發修訂說明紀錄。</p>
+                        <div class="enter-btn">點擊進入查看作業列表 →</div>
+                    </div>
+                </a>
+
+                <!-- 作業二：期末英打遊戲歷程 (Taste the World) -->
+                <a href="typing-game-process.html" class="course-card-link">
+                    <div class="course-card">
+                        <h3>⌨️ 期末英打遊戲歷程 — Taste the World</h3>
+                        <p>紀錄科技概論期末專案 Taste the World 英打遊戲的完整開發歷程，包含 V1.0 基礎版與 V2.0 進階優化版的設計與線上試玩。</p>
+                        <div class="enter-btn">點擊進入查看開發歷程 →</div>
+                    </div>
+                </a>
+            </div>
         </section>
 
         <!-- 頁尾 Gmail 與計時器 -->
