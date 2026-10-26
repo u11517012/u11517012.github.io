@@ -179,9 +179,50 @@
         }
 
         .version-card h3 {
-            margin: 0 0 16px 0;
+            margin: 0 0 12px 0;
             font-size: 1.3rem;
             color: var(--text);
+        }
+
+        .version-desc {
+            font-size: 0.92rem;
+            color: var(--text);
+            margin: 0 0 12px 0;
+        }
+
+        .version-changes {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--highlight);
+        }
+
+        .version-changes.accent-border {
+            border-left-color: var(--accent);
+        }
+
+        .version-changes h4 {
+            margin: 0 0 6px 0;
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .version-changes ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+
+        .version-changes li {
+            margin-bottom: 4px;
+        }
+
+        .version-changes li:last-child {
+            margin-bottom: 0;
         }
 
         .demo-btn {
@@ -317,6 +358,15 @@
             <article id="v1" class="version-card">
                 <span class="version-badge">Version 1.0</span>
                 <h3>Taste the World</h3>
+                <p class="version-desc">初始原型版本，設計較為硬核，直接以單字、句子與文章進行闖關。</p>
+                <div class="version-changes">
+                    <h4>📌 版本特點與限制</h4>
+                    <ul>
+                        <li>直接以長單字與句子作為過關條件，對初學者門檻較高。</li>
+                        <li>無視覺化鍵盤與指引提示，需要盲打基礎。</li>
+                        <li>單一地圖設計，缺乏遊戲進度與通關紀錄儲存。</li>
+                    </ul>
+                </div>
                 <div>
                     <a href="https://u11517012.github.io/taste-the-world/" target="_blank" rel="noopener noreferrer" class="demo-btn">🎮 試玩 V1.0 版本 ↗</a>
                 </div>
@@ -326,6 +376,18 @@
             <article id="v2" class="version-card">
                 <span class="version-badge">Version 2.0</span>
                 <h3>Taste the World 2.0</h3>
+                <p class="version-desc">重構教學邏輯與 UI 介面，新增虛擬鍵盤指引提示與進度記憶功能。</p>
+                <div class="version-changes accent-border">
+                    <h4>🚀 V2.0 主要修改與更新亮點</h4>
+                    <ul>
+                        <li><strong>實時鍵盤指引 (Visual Keyboard Guide)：</strong>闖關時新增虛擬鍵盤輔助，動態高亮下一顆應按按鍵與對應手指手位，引導初學者建立盲打肌肉記憶。</li>
+                        <li><strong>進度記憶功能 (Data Saving)：</strong>新增本地儲存機制，能自動記錄玩家已解鎖關卡、通關紀錄與個人練習進度，重新開啟網頁即可繼續遊玩。</li>
+                        <li><strong>初學者友善 — 盲打教學體系：</strong>改為由淺入深「一排一排鍵盤」逐步練習，待熟悉鍵盤位置後才進入單字闖關。</li>
+                        <li><strong>世界地圖與關卡選擇：</strong>新增多國美食關卡地圖，讓玩家自主選擇學習進度。</li>
+                        <li><strong>動態背景與視覺優化：</strong>加入動態背景特效與字元高亮提示，大幅降低打字疲勞感。</li>
+                        <li><strong>即時反饋與響應式 UI：</strong>優化錯字提示與介面排版，完美適應不同裝置螢幕。</li>
+                    </ul>
+                </div>
                 <div>
                     <a href="https://u11517012.github.io/Taste-the-World2.0/" target="_blank" rel="noopener noreferrer" class="demo-btn">🚀 試玩 V2.0 版本 ↗</a>
                 </div>
@@ -347,7 +409,7 @@
             
             <div>
                 <a href="mailto:your-email@gmail.com" class="email-link">
-                    ✉️ 聯絡信箱：your-email@gmail.com
+                    ✉️ 聯絡信箱：u11517012@go.utaipei.edu.tw
                 </a>
             </div>
 
