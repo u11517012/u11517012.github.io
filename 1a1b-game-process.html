@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幾 A 幾 B 猜數字遊戲開發歷程 | 劉宜欣 Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg: #F7F4EF;
+            --card: #EFECE6;
+            --text: #4A453F;
+            --muted: #8C857B;
+            --line: #D9D2C7;
+            --highlight: #17596E;
+            --accent: #D9825B;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .layout-wrapper {
+            display: flex;
+            max-width: 960px;
+            width: 100%;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        aside.sidebar {
+            width: 180px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-link:hover {
+            background-color: var(--card);
+            color: var(--highlight);
+            transform: translateX(4px);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            max-width: 680px;
+        }
+
+        nav.top-nav {
+            margin-bottom: 20px;
+        }
+
+        .logo-btn {
+            color: var(--highlight);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-btn:hover {
+            opacity: 0.8;
+        }
+
+        header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 20px;
+        }
+
+        h1.title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            color: var(--text);
+        }
+
+        p.subtitle {
+            color: var(--muted);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .version-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .version-card {
+            background-color: var(--card);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .version-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 69, 63, 0.08);
+            border-color: var(--highlight);
+        }
+
+        .version-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .version-tag {
+            background-color: var(--highlight);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 14px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .version-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+
+        .version-card p {
+            margin: 8px 0 14px 0;
+            font-size: 0.92rem;
+            color: var(--muted);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+            font-size: 0.9rem;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: var(--highlight);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .play-btn:hover {
+            background-color: #124353;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+        }
+
+        @media (max-width: 768px) {
+            .layout-wrapper {
+                flex-direction: column;
+                padding: 20px 15px;
+                gap: 20px;
+            }
+            aside.sidebar {
+                width: 100%;
+                position: static;
+                border-bottom: 1px solid var(--line);
+                padding-bottom: 15px;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout-wrapper">
+    <!-- 側邊導覽欄 -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Quick Menu</div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">🏠 回作品集首頁</a>
+            <a href="#versions" class="sidebar-link">🔢 版本開發歷程</a>
+        </nav>
+    </aside>
+
+    <!-- 主要內容區 -->
+    <main class="main-content">
+        <nav class="top-nav">
+            <a href="index.html" class="logo-btn">← 返回作品集首頁</a>
+        </nav>
+
+        <header>
+            <h1 class="title">幾 A 幾 B 猜數字遊戲開發歷程</h1>
+            <p class="subtitle">數位科技概論 · 專案演進與雲端資料庫應用</p>
+        </header>
+
+        <section id="versions">
+            <div class="version-list">
+
+                <!-- 版本一 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <h3>版本一：基礎遊戲與除錯模式</h3>
+                        <span class="version-tag">V1.0</span>
+                    </div>
+                    <p>建立核心幾 A 幾 B 邏輯，包含 0~9 不重複四位數防呆機制與除錯模式開關。</p>
+                    <ul class="feature-list">
+                        <li>4 位不重複數字判斷（保留開頭 0）</li>
+                        <li>無效輸入防呆與錯誤提示（不列入計次）</li>
+                        <li>可開關除錯模式（顯示本局真實答案）</li>
+                        <li>猜對停止作答與重新開始重設</li>
+                    </ul>
+                    <a href="https://u11517012.github.io/1a1b-game-v1/" target="_blank" rel="noopener" class="play-btn">開啟版本一 ↗</a>
+                </div>
+
+                <!-- 版本二 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <h3>版本二：多局管理與歷史面板</h3>
+                        <span class="version-tag">V2.0</span>
+                    </div>
+                    <p>導入雙欄佈局與狀態管理，紀錄頁面當前的多局狀態（進行中／已猜對／未完成）。</p>
+                    <ul class="feature-list">
+                        <li>頁面多局猜測歷史面板（勝率與總局數）</li>
+                        <li>折疊式每局時間與詳細猜測表格</li>
+                        <li>中途開新局自動將舊局標記為「未完成」</li>
+                        <li>獨立保持除錯模式狀態</li>
+                    </ul>
+                    <a href="https://u11517012.github.io/1a1b-game-v2/" target="_blank" rel="noopener" class="play-btn">開啟版本二 ↗</a>
+                </div>
+
+                <!-- 版本三 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <h3>版本三：代號識別與 GAS 雲端存檔</h3>
+                        <span class="version-tag">V3.0</span>
+                    </div>
+                    <p>對接 Google Apps Script (GAS) 與 Google 試算表，實現雲端自動同步與未完成局續玩。</p>
+                    <ul class="feature-list">
+                        <li>使用者代號識別系統（無需密碼登入）</li>
+                        <li>每次有效猜測自動備份至 Google 試算表</li>
+                        <li>關閉瀏覽器後輸入同一代號完整讀回紀錄</li>
+                        <li>支援選取雲端未完成局繼續答題</li>
+                    </ul>
+                    <a href="https://script.google.com/macros/s/AKfycbzhxsYe4CSqKOksAOK3eBzKzX6NxH8X2YjMcaXsutt__qQNIF-hugmZPQNyqM7zal9CUg/exec" target="_blank" rel="noopener" class="play-btn">開啟版本三 ↗</a>
+                </div>
+
+                <!-- 版本四 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <h3>版本四：Google 帳號與個人雲端存檔</h3>
+                        <span class="version-tag">V4.0</span>
+                    </div>
+                    <p>結合 Google 身分驗證，自動在每位玩家自己的雲端硬碟建立與管理試算表存檔。</p>
+                    <ul class="feature-list">
+                        <li>免密碼、自動綁定 Google 帳號</li>
+                        <li>於個人 Google Drive 自動建立專屬試算表</li>
+                        <li>跨裝置自動同步遊戲進度與歷史紀錄</li>
+                        <li>包含除錯模式與歷史追蹤</li>
+                    </ul>
+                    <a href="https://script.google.com/macros/s/AKfycbw4jS_W_O-nRC1wsWK3LaRfSDiDzHHxaMV2mQ0LibUVvnQ18XCoai4lm2vXJcM4-p-8/exec" target="_blank" rel="noopener" class="play-btn">開啟版本四 ↗</a>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 劉宜欣. All rights reserved.</p>
+        </footer>
+    </main>
+</div>
+
+</body>
+</html>
