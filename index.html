@@ -10,83 +10,107 @@
         :root {
             --bg: #F7F4EF;
             --card: #EFECE6;
+            --card-hover: #EAE5DC;
             --text: #4A453F;
             --muted: #8C857B;
             --line: #D9D2C7;
             --highlight: #17596E;
+            --highlight-light: rgba(23, 89, 110, 0.08);
             --accent: #D9825B;
+            --accent-light: rgba(217, 130, 91, 0.12);
         }
 
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.8;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+            line-height: 1.75;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
         }
 
-        /* 全域佈局容器 */
+        /* 全域佈局容器（稍微加寬以容納雙欄卡片） */
         .layout-wrapper {
             display: flex;
-            max-width: 960px;
+            max-width: 1080px;
             width: 100%;
-            padding: 40px 20px;
-            gap: 40px;
+            padding: 40px 24px;
+            gap: 48px;
         }
 
         /* 側邊導覽欄 (Sidebar) */
         aside.sidebar {
-            width: 180px;
+            width: 210px;
             flex-shrink: 0;
             position: sticky;
             top: 40px;
             height: fit-content;
         }
 
+        .sidebar-group {
+            margin-bottom: 24px;
+        }
+
         .sidebar-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: bold;
+            padding-left: 12px;
         }
 
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
         }
 
         .sidebar-link {
             color: var(--text);
             text-decoration: none;
-            font-size: 0.95rem;
-            padding: 6px 12px;
+            font-size: 0.9rem;
+            padding: 7px 12px;
             border-radius: 6px;
+            border-left: 3px solid transparent;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .sidebar-link:hover {
             background-color: var(--card);
             color: var(--highlight);
-            transform: translateX(4px);
+            transform: translateX(3px);
+        }
+
+        /* 捲動到對應區塊時的高亮狀態 */
+        .sidebar-link.active {
+            background-color: var(--highlight-light);
+            color: var(--highlight);
+            border-left-color: var(--highlight);
+            font-weight: 600;
         }
 
         /* 主要內容區域 */
         .main-content {
             flex-grow: 1;
-            max-width: 680px;
+            min-width: 0;
         }
 
         nav.top-nav {
@@ -107,9 +131,9 @@
         }
 
         header {
-            margin-bottom: 30px;
+            margin-bottom: 36px;
             border-bottom: 1px solid var(--line);
-            padding-bottom: 20px;
+            padding-bottom: 24px;
         }
 
         /* 打字機效果 */
@@ -119,10 +143,10 @@
             border-right: 2px solid var(--highlight);
             white-space: nowrap;
             letter-spacing: 1px;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: bold;
-            margin: 0 0 8px 0;
-            animation: typing 2.5s steps(15, end), blink-caret 0.75s step-end infinite;
+            margin: 0 0 6px 0;
+            animation: typing 2.2s steps(17, end), blink-caret 0.75s step-end infinite;
         }
 
         @keyframes typing {
@@ -136,13 +160,31 @@
         }
 
         p.subtitle {
+            color: var(--highlight);
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+
+        p.bio {
             color: var(--muted);
             margin: 0;
             font-size: 0.95rem;
+            max-width: 640px;
         }
 
         section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* 區塊標題與篩選按鈕列 */
+        .section-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         h2.section-title {
@@ -150,43 +192,105 @@
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 15px;
+            margin: 0;
         }
 
-        /* 課程卡片容器：垂直排列多張卡片 */
-        .course-list {
+        /* 作品分類篩選按鈕 */
+        .filter-bar {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: 1px solid var(--line);
+            color: var(--muted);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--highlight);
+            color: var(--highlight);
+        }
+
+        .filter-btn.active {
+            background-color: var(--highlight);
+            border-color: var(--highlight);
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+
+        /* 課程卡片容器：雙欄網格佈局 */
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
         }
 
         /* 課程卡片樣式 */
         .course-card-link {
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            scroll-margin-top: 30px; /* 錨點跳轉時上方預留空間 */
+        }
+
+        .course-card-link.hidden {
+            display: none;
         }
 
         .course-card {
             background-color: var(--card);
-            padding: 30px;
-            border-radius: 12px;
+            padding: 26px;
+            border-radius: 14px;
             border: 1px solid var(--line);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
         }
 
         .course-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 24px rgba(74, 69, 63, 0.1);
             border-color: var(--highlight);
+            background-color: var(--card-hover);
+        }
+
+        /* 卡片頂部性質標籤 */
+        .card-type-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .type-process {
+            background-color: var(--highlight-light);
+            color: var(--highlight);
+        }
+
+        .type-live {
+            background-color: var(--accent-light);
+            color: var(--accent);
         }
 
         .course-card h3 {
-            margin: 0 0 8px 0;
-            font-size: 1.3rem;
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
             color: var(--text);
             transition: color 0.3s ease;
+            line-height: 1.4;
         }
 
         .course-card-link:hover .course-card h3 {
@@ -194,18 +298,49 @@
         }
 
         .course-card p {
-            margin: 0 0 16px 0;
-            font-size: 0.95rem;
+            margin: 0 0 18px 0;
+            font-size: 0.92rem;
             color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* 技術標籤列 */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 2px 9px;
+            border-radius: 4px;
+            background-color: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+
+        .card-footer {
+            padding-top: 14px;
+            border-top: 1px dashed var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .enter-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: bold;
             color: var(--highlight);
+            transition: gap 0.2s ease;
+        }
+
+        .course-card-link:hover .enter-btn {
+            gap: 10px;
         }
 
         /* 頁尾與 Gmail 聯絡連結 */
@@ -214,7 +349,7 @@
             color: var(--muted);
             font-size: 0.85rem;
             margin-top: 60px;
-            padding-top: 20px;
+            padding-top: 24px;
             border-top: 1px solid var(--line);
         }
 
@@ -226,7 +361,7 @@
             text-decoration: none;
             font-weight: 500;
             margin-top: 6px;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 20px;
             transition: all 0.2s ease;
         }
@@ -240,7 +375,7 @@
             display: inline-block;
             margin-top: 14px;
             background-color: var(--card);
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 20px;
             border: 1px dashed var(--line);
             cursor: pointer;
@@ -250,7 +385,7 @@
 
         .time-badge:hover {
             background-color: #e2ddd3;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .highlight-num {
@@ -258,11 +393,24 @@
             font-weight: bold;
         }
 
-        /* 響應式：手機版 */
+        .konami-hint {
+            margin-top: 12px;
+            font-size: 0.78rem;
+            color: var(--muted);
+            opacity: 0.8;
+        }
+
+        /* 響應式：平板與手機版 */
+        @media (max-width: 860px) {
+            .course-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .layout-wrapper {
                 flex-direction: column;
-                padding: 20px 15px;
+                padding: 20px 16px;
                 gap: 20px;
             }
 
@@ -270,12 +418,33 @@
                 width: 100%;
                 position: static;
                 border-bottom: 1px solid var(--line);
-                padding-bottom: 15px;
+                padding-bottom: 12px;
+            }
+
+            .sidebar-group {
+                margin-bottom: 10px;
+            }
+
+            .sidebar-title {
+                padding-left: 0;
             }
 
             .sidebar-nav {
                 flex-direction: row;
                 overflow-x: auto;
+                padding-bottom: 4px;
+            }
+
+            .sidebar-link {
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                background-color: var(--card);
+                flex-shrink: 0;
+            }
+
+            .sidebar-link.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--highlight);
             }
         }
     </style>
@@ -286,15 +455,35 @@
 
     <!-- 側邊快速導覽欄 (Sidebar) -->
     <aside class="sidebar">
-        <div class="sidebar-title">Quick Menu</div>
-        <nav class="sidebar-nav">
-            <a href="#courses" class="sidebar-link">📚 課程作品</a>
-            <a href="#contact" class="sidebar-link">✉️ 聯絡資訊</a>
-        </nav>
+        <div class="sidebar-group">
+            <div class="sidebar-title">Overview</div>
+            <nav class="sidebar-nav">
+                <a href="#top" class="sidebar-link active">👋 關於我</a>
+                <a href="#courses" class="sidebar-link">📚 全部作品 (5)</a>
+            </nav>
+        </div>
+
+        <div class="sidebar-group">
+            <div class="sidebar-title">Projects Directory</div>
+            <nav class="sidebar-nav">
+                <a href="#proj-1" class="sidebar-link">💻 數位科技概論</a>
+                <a href="#proj-2" class="sidebar-link">🔢 幾 A 幾 B 遊戲</a>
+                <a href="#proj-3" class="sidebar-link">⌨️ Taste the World</a>
+                <a href="#proj-4" class="sidebar-link">🎨 數位互動繪本</a>
+                <a href="#proj-5" class="sidebar-link">🎭 莎士比亞互動網</a>
+            </nav>
+        </div>
+
+        <div class="sidebar-group">
+            <div class="sidebar-title">Connect</div>
+            <nav class="sidebar-nav">
+                <a href="#contact" class="sidebar-link">✉️ 聯絡資訊</a>
+            </nav>
+        </div>
     </aside>
 
     <!-- 主要頁面內容 -->
-    <main class="main-content">
+    <main class="main-content" id="top">
         <nav class="top-nav">
             <a href="index.html" class="logo-btn">✦ YIXIN LIU 劉宜欣</a>
         </nav>
@@ -304,55 +493,128 @@
                 <span class="typewriter-text">Yixin's Portfolio</span>
             </div>
             <p class="subtitle">台北市立大學 學習與媒材設計學系</p>
+            <p class="bio">
+                專注於結合教育設計與前端網頁技術，喜歡將文學故事、語言學習與邏輯遊戲轉化為直覺且富有趣味性的數位互動體驗。
+            </p>
         </header>
 
         <!-- 課程作品區塊 -->
         <section id="courses">
-            <h2 class="section-title">Courses</h2>
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                
+                <!-- 分類篩選器 -->
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">全部作品</button>
+                    <button class="filter-btn" data-filter="game">互動遊戲</button>
+                    <button class="filter-btn" data-filter="story">繪本與文學</button>
+                    <button class="filter-btn" data-filter="web">基礎網頁</button>
+                </div>
+            </div>
 
             <div class="course-list">
-                <!-- 作業一：數位科技概論作品集 -->
-                <a href="digitech-homework.html" class="course-card-link">
+                <!-- 作品一：數位科技概論作品集 -->
+                <a href="digitech-homework.html" id="proj-1" class="course-card-link" data-category="web">
                     <div class="course-card">
-                        <h3>💻 數位科技概論作品集</h3>
-                        <p>包含作業一至作業五的完整網頁專案、RWD 響應式佈局以及開發修訂說明紀錄。</p>
-                        <div class="enter-btn">點擊進入查看作業列表 →</div>
+                        <div>
+                            <span class="card-type-badge type-process">系列作業彙整</span>
+                            <h3>💻 數位科技概論作品集</h3>
+                            <p>完整收錄作業一至作業五的網頁實作專案，展現從基礎排版、RWD 響應式佈局到版本修訂的系統化學習軌跡。</p>
+                        </div>
+                        <div>
+                            <div class="tag-group">
+                                <span class="tag">HTML5 / CSS3</span>
+                                <span class="tag">RWD 響應式</span>
+                                <span class="tag">版本迭代</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="enter-btn">查看作業列表 →</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
 
-                <!-- 作業二：幾A幾B猜數字遊戲歷程 -->
-                <a href="1a1b-game-process.html" class="course-card-link">
+                <!-- 作品二：幾A幾B猜數字遊戲歷程 -->
+                <a href="1a1b-game-process.html" id="proj-2" class="course-card-link" data-category="game">
                     <div class="course-card">
-                        <h3>🔢 幾 A 幾 B 猜數字遊戲歷程</h3>
-                        <p>收錄從基礎 4 位數驗證 (V1.0)、多局面板管理 (V2.0)、到 Google Apps Script 雲端資料庫存檔 (V3.0) 的完整開發演進。</p>
-                        <div class="enter-btn">點擊進入查看開發歷程 →</div>
+                        <div>
+                            <span class="card-type-badge type-process">開發歷程 + 線上試玩</span>
+                            <h3>🔢 幾 A 幾 B 猜數字遊戲</h3>
+                            <p>從基礎 4 位數邏輯驗證 (V1.0)、多局面板狀態管理 (V2.0)，一路演進至串接 Google Apps Script 雲端存檔 (V3.0)。</p>
+                        </div>
+                        <div>
+                            <div class="tag-group">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Apps Script 雲端</span>
+                                <span class="tag">邏輯演算法</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="enter-btn">查看開發歷程 →</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
 
-                <!-- 作業三：期末英打遊戲歷程 (Taste the World) -->
-                <a href="typing-game-process.html" class="course-card-link">
+                <!-- 作品三：期末英打遊戲歷程 (Taste the World) -->
+                <a href="typing-game-process.html" id="proj-3" class="course-card-link" data-category="game">
                     <div class="course-card">
-                        <h3>⌨️ 期末英打遊戲歷程 — Taste the World</h3>
-                        <p>紀錄科技概論期末專案 Taste the World 英打遊戲的完整開發歷程，包含 V1.0 基礎版與 V2.0 進階優化版的設計與線上試玩。</p>
-                        <div class="enter-btn">點擊進入查看開發歷程 →</div>
+                        <div>
+                            <span class="card-type-badge type-process">開發歷程 + 線上試玩</span>
+                            <h3>⌨️ Taste the World 英打遊戲</h3>
+                            <p>結合世界美食主題的英語打字學習遊戲，完整紀錄從 V1.0 核心機制到 V2.0 遊戲手感與介面優化的設計思路。</p>
+                        </div>
+                        <div>
+                            <div class="tag-group">
+                                <span class="tag">遊戲化學習</span>
+                                <span class="tag">鍵盤事件處理</span>
+                                <span class="tag">UI/UX 優化</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="enter-btn">查看開發歷程 →</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
 
-                <!-- 作業四：數位互動繪本 -->
-                <a href="https://u11517012.github.io/drawingbook/" target="_blank" rel="noopener noreferrer" class="course-card-link">
+                <!-- 作品四：數位互動繪本 -->
+                <a href="https://u11517012.github.io/drawingbook/" id="proj-4" target="_blank" rel="noopener noreferrer" class="course-card-link" data-category="story">
                     <div class="course-card">
-                        <h3>🎨 數位互動繪本 — Drawing Book</h3>
-                        <p>結合網頁互動設計與視覺插畫創作的線上繪本專案，提供流暢的翻頁與閱讀體驗。</p>
-                        <div class="enter-btn">點擊開啟線上繪本 ↗</div>
+                        <div>
+                            <span class="card-type-badge type-live">線上互動成品</span>
+                            <h3>🎨 數位互動繪本 — Drawing Book</h3>
+                            <p>融合原創視覺插畫與網頁動態翻頁效果的數位繪本，為讀者打造沉浸式的線上故事閱讀體驗。</p>
+                        </div>
+                        <div>
+                            <div class="tag-group">
+                                <span class="tag">數位敘事</span>
+                                <span class="tag">插畫視覺</span>
+                                <span class="tag">互動翻頁</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="enter-btn">開啟線上繪本 ↗</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
 
-                <!-- 作業五：莎士比亞互動專案 -->
-                <a href="https://u11517012.github.io/Shakespeare/" target="_blank" rel="noopener noreferrer" class="course-card-link">
+                <!-- 作品五：莎士比亞互動專案 -->
+                <a href="https://u11517012.github.io/Shakespeare/" id="proj-5" target="_blank" rel="noopener noreferrer" class="course-card-link" data-category="story">
                     <div class="course-card">
-                        <h3>🎭 莎士比亞文學互動網 — Shakespeare</h3>
-                        <p>探索威廉·莎士比亞的經典戲劇作品、名言與文學背景的互動網頁專案。</p>
-                        <div class="enter-btn">點擊開啟線上網站 ↗</div>
+                        <div>
+                            <span class="card-type-badge type-live">線上互動成品</span>
+                            <h3>🎭 莎士比亞文學互動網</h3>
+                            <p>將經典戲劇、名言金句與時代背景轉化為互動網頁導覽，降低文學閱讀門檻並提升探索樂趣。</p>
+                        </div>
+                        <div>
+                            <div class="tag-group">
+                                <span class="tag">文學數位化</span>
+                                <span class="tag">資訊架構</span>
+                                <span class="tag">互動網頁</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="enter-btn">開啟線上網站 ↗</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -360,7 +622,7 @@
 
         <!-- 頁尾 Gmail 與計時器 -->
         <footer id="contact">
-            <p style="margin-bottom: 4px;">&copy; 2026 劉宜欣. All rights reserved.</p>
+            <p style="margin-bottom: 4px;">&copy; 2026 劉宜欣 Yixin Liu. All rights reserved.</p>
             
             <div>
                 <a href="mailto:u11517012@go.utaipei.edu.tw" class="email-link">
@@ -370,6 +632,10 @@
 
             <div class="time-badge" id="timeBadge" onclick="showEasterEgg()">
                 ⏱️ 你已經在此頁面停留了 <span id="timer" class="highlight-num">0 秒</span> (點我)
+            </div>
+
+            <div class="konami-hint">
+                💡 小提示：在鍵盤輸入經典秘技（↑↑↓↓←→←→BA）有驚喜喔！
             </div>
         </footer>
     </main>
@@ -402,7 +668,54 @@
         alert(randomQuote);
     }
 
-    // 2. 鍵盤彩蛋：Konami Code (上上下下左右左右ba)
+    // 2. 作品分類篩選功能
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.course-card-link');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 切換按鈕 active 樣式
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            projectCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // 3. 側邊目錄捲動高亮 (ScrollSpy)
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const sections = document.querySelectorAll('main[id], section[id], a.course-card-link[id], footer[id]');
+
+    window.addEventListener('scroll', () => {
+        let currentId = '';
+        const scrollPosition = window.scrollY + 120;
+
+        sections.forEach(sec => {
+            if (!sec.classList.contains('hidden')) {
+                const top = sec.offsetTop;
+                if (scrollPosition >= top) {
+                    currentId = sec.getAttribute('id');
+                }
+            }
+        });
+
+        sidebarLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentId}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // 4. 鍵盤彩蛋：Konami Code (上上下下左右左右ba)
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     let userInput = [];
 
