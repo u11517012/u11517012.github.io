@@ -344,6 +344,7 @@
             <a href="#v1" class="sidebar-link">🍕 V1.0 第一版</a>
             <a href="#v2" class="sidebar-link">🌮 V2.0 第二版</a>
             <a href="#v3" class="sidebar-link">✈️ V3.0 第三版</a>
+            <a href="#v4" class="sidebar-link">☁️ V4.0 第四版</a>
             <a href="#future" class="sidebar-link">🛠️ 未來更新</a>
             <a href="#contact" class="sidebar-link">✉️ 聯絡資訊</a>
         </nav>
@@ -358,7 +359,7 @@
 
         <header>
             <h1 class="page-title">🍕 Taste the World 期末英打遊戲歷程</h1>
-            <p class="subtitle">數位科技概論專案 — 開發歷程與版本紀錄</p>
+            <p class="subtitle">數位科技概論專案 — 開發歷程與版本迭代紀錄</p>
         </header>
 
         <section>
@@ -367,14 +368,14 @@
             <!-- Version 1.0 -->
             <article id="v1" class="version-card">
                 <span class="version-badge">Version 1.0</span>
-                <h3>Taste the World</h3>
-                <p class="version-desc">初始原型版本，設計較為硬核，直接以單字、句子與文章進行闖關。</p>
+                <h3>Taste the World — 基礎打字闖關原型</h3>
+                <p class="version-desc">確立「環球美食 × 英文打字」的核心概念，完成最基礎的輸入比對與過關判定機制。</p>
                 <div class="version-changes">
-                    <h4>📌 版本特點與限制</h4>
+                    <h4>📌 V1.0 核心架構與版本限制</h4>
                     <ul>
-                        <li>直接以長單字與句子作為過關條件，對初學者門檻較高。</li>
-                        <li>無視覺化鍵盤與指引提示，需要盲打基礎。</li>
-                        <li>單一地圖設計，缺乏遊戲進度與通關紀錄儲存。</li>
+                        <li><strong>單字與短句練打機制：</strong>直接以各國代表性美食單字與長句作為關卡題庫，建立即時字元輸入比對邏輯。</li>
+                        <li><strong>初學者門檻較高：</strong>缺乏鍵盤視覺提示與指法分級，對完全沒有盲打基礎的玩家較具挑戰性。</li>
+                        <li><strong>無狀態單機架構：</strong>未加入本地端或雲端儲存功能，重新整理網頁後所有通關進度即會重置。</li>
                     </ul>
                 </div>
                 <div>
@@ -385,17 +386,15 @@
             <!-- Version 2.0 -->
             <article id="v2" class="version-card">
                 <span class="version-badge">Version 2.0</span>
-                <h3>Taste the World 2.0</h3>
-                <p class="version-desc">重構教學邏輯與 UI 介面，新增虛擬鍵盤指引提示與進度記憶功能。</p>
+                <h3>Taste the World 2.0 — 視覺化盲打教學系統</h3>
+                <p class="version-desc">針對初學者痛點全面重構教學曲線，導入虛擬鍵盤手位引導與本機存檔記憶機制。</p>
                 <div class="version-changes accent-border">
-                    <h4>🚀 V2.0 主要修改與更新亮點</h4>
+                    <h4>🚀 V2.0 更新重點與功能改進</h4>
                     <ul>
-                        <li><strong>實時鍵盤指引 (Visual Keyboard Guide)：</strong>闖關時新增虛擬鍵盤輔助，動態高亮下一顆應按按鍵與對應手指手位，引導初學者建立盲打肌肉記憶。</li>
-                        <li><strong>進度記憶功能 (Data Saving)：</strong>新增本地儲存機制，能自動記錄玩家已解鎖關卡、通關紀錄與個人練習進度，重新開啟網頁即可繼續遊玩。</li>
-                        <li><strong>初學者友善 — 盲打教學體系：</strong>改為由淺入深「一排一排鍵盤」逐步練習，待熟悉鍵盤位置後才進入單字闖關。</li>
-                        <li><strong>世界地圖與關卡選擇：</strong>新增多國美食關卡地圖，讓玩家自主選擇學習進度。</li>
-                        <li><strong>動態背景與視覺優化：</strong>加入動態背景特效與字元高亮提示，大幅降低打字疲勞感。</li>
-                        <li><strong>即時反饋與響應式 UI：</strong>優化錯字提示與介面排版，完美適應不同裝置螢幕。</li>
+                        <li><strong>虛擬鍵盤與手位指引 (Visual Keyboard)：</strong>新增螢幕下方動態鍵盤，即時高亮下一顆應按鍵位與對應手指提示，幫助新手建立肌肉記憶。</li>
+                        <li><strong>漸進式盲打教學曲線：</strong>將關卡重組為「基準鍵位 → 上排鍵位 → 下排鍵位 → 綜合單字」的循序漸進練習結構。</li>
+                        <li><strong>本機進度記憶 (LocalStorage)：</strong>首次導入瀏覽器本地儲存，自動記錄玩家解鎖的關卡與通關狀態，重開網頁可接續遊玩。</li>
+                        <li><strong>多國地圖與響應式介面：</strong>加入世界地圖選關介面與錯字即時反饋特效，提升操作流暢度與視覺體驗。</li>
                     </ul>
                 </div>
                 <div>
@@ -405,21 +404,41 @@
 
             <!-- Version 3.0 -->
             <article id="v3" class="version-card">
-                <span class="version-badge badge-accent">Version 3.0 (Latest)</span>
-                <h3>Taste the World 3.0 — 環球航線美食版</h3>
-                <p class="version-desc">全面升級為「環球航空主題」遊戲化體驗，擴充至 50 個國家航線、雙副本挑戰模式、護照收集與完整用戶記憶存檔系統。</p>
+                <span class="version-badge">Version 3.0</span>
+                <h3>Taste the World 3.0 — 50 國環球航空遊戲化</h3>
+                <p class="version-desc">全面升級為「環球航空主題」，大幅擴充關卡規模至五大洲 50 國，並建立完整的成就與護照收集系統。</p>
                 <div class="version-changes accent-border">
-                    <h4>✈️ V3.0 核心升級與新增系統</h4>
+                    <h4>✈️ V3.0 更新重點與系統擴充</h4>
                     <ul>
-                        <li><strong>50 國環球航線與大洲導航：</strong>擴展至五大洲共 50 個國家關卡，每國設有「備料初階、烹飪進階、上菜流暢」三階段指法晉級路線，並結合飛行里程（km）與航速（WPM）成長數據。</li>
-                        <li><strong>陪同飛行員角色系統 (Co-Pilot Selection)：</strong>新增多位可愛陪同飛行員供玩家選擇，在練打過程中提供即時互動語音文字與指法引導。</li>
-                        <li><strong>突發事件機制「食材結凍」：</strong>關卡中隨機出現藍色冰塊字元，需「連按 2 下」敲碎冰塊，成功通關可獲得雙倍飛行里程獎勵，增加打字節奏變化。</li>
-                        <li><strong>高難度雙副本挑戰：</strong>主線通關後可挑戰限時加倍的「🔥 美食暴走 Fever」賺取副本星數，或挑戰零失誤的「💣 廚房炸彈菜單」解鎖專屬護照金框 👑 與暗黑料理吐槽彩蛋。</li>
-                        <li><strong>完整用戶記憶與護照成就系統 (User Memory &amp; Passport)：</strong>強化本地儲存與用戶狀態記憶，自動保存選擇的陪同飛行員、累積飛行里程、最高航速、50 國通關護照印章、金框彩蛋與 10 款「抽象諧音梗成就徽章」，隨時接續環球旅程。</li>
+                        <li><strong>五大洲 50 國航線與三階段晉級：</strong>擴充至 50 個國家美食關卡，每國皆設計「備料初階、烹飪進階、上菜流暢」三道關卡，結合飛行里程（km）與航速（WPM）數據追蹤。</li>
+                        <li><strong>陪同飛行員系統 (Co-Pilot)：</strong>新增 9 位可自由切換的陪同飛行員角色，在練打過程中提供專屬台詞鼓勵與即時指法提示。</li>
+                        <li><strong>突發事件「食材結凍」機制：</strong>關卡中隨機生成藍色冰塊字元，需「連按 2 下」敲碎冰塊，成功通關可獲得雙倍里程獎勵。</li>
+                        <li><strong>高難度雙副本挑戰：</strong>主線通關後解鎖限時雙倍獎勵的「🔥 美食暴走 Fever」與零失誤挑戰「💣 廚房炸彈菜單」（通關可解鎖護照金框 👑 與暗黑料理吐槽彩蛋）。</li>
+                        <li><strong>通關護照與諧音梗成就：</strong>新增 50 國邊檢國旗印章護照與 10 款抽象諧音梗成就徽章，大幅強化長期練打的收集動力。</li>
                     </ul>
                 </div>
                 <div>
-                    <a href="https://u11517012.github.io/taste-the-world3.0/" target="_blank" rel="noopener noreferrer" class="demo-btn btn-primary">✈️ 試玩 V3.0 最新版 ↗</a>
+                    <a href="https://u11517012.github.io/taste-the-world3.0/" target="_blank" rel="noopener noreferrer" class="demo-btn">✈️ 試玩 V3.0 版本 ↗</a>
+                </div>
+            </article>
+
+            <!-- Version 4.0 -->
+            <article id="v4" class="version-card">
+                <span class="version-badge badge-accent">Version 4.0 (Latest)</span>
+                <h3>Taste the World 4.0 — 雲端帳號同步與飛行員社交版</h3>
+                <p class="version-desc">串接 Google Apps Script (GAS) 雲端資料庫，從單機遊戲進化為支援跨裝置存檔、全服即時排行榜與個人練習手札的完整線上系統。</p>
+                <div class="version-changes accent-border">
+                    <h4>☁️ V4.0 更新重點與全端功能升級</h4>
+                    <ul>
+                        <li><strong>GAS 雲端資料庫與多帳號系統：</strong>串接 Google Sheets 後端 API，玩家只需輸入飛行員代號即可將里程、星數、護照印章與成就即時同步至雲端，實現跨電腦、手機無縫接軌。</li>
+                        <li><strong>全體飛行員即時排行榜 (Leaderboard)：</strong>新增全服玩家排名系統，即時同步並展示所有飛行員的累積里程、通關國家數、最高航速與副本星數，並標示個人目前名次。</li>
+                        <li><strong>旅行練習筆記本 (Travel Notebook)：</strong>新增互動式題庫複習手札，自動彙整各國指法重點與單字，並支援玩家自由撰寫與儲存個人練字心得筆記。</li>
+                        <li><strong>舊版存檔自動遷移救援：</strong>內建本機存檔偵測與自動搬移機制，可將早期版本的單機遊玩紀錄無痛轉移至指定雲端帳號下，避免進度遺失。</li>
+                        <li><strong>無縫連貫出餐與快速登入優化：</strong>優化通關結算後的 3 秒自動跳轉下一關節奏，並加入記憶上次登入帳號的一鍵快速登機體驗。</li>
+                    </ul>
+                </div>
+                <div>
+                    <a href="https://u11517012.github.io/taste-the-world4.0/" target="_blank" rel="noopener noreferrer" class="demo-btn btn-primary">☁️ 試玩 V4.0 最新版 ↗</a>
                 </div>
             </article>
 
@@ -438,7 +457,7 @@
             <p style="margin-bottom: 4px;">&copy; 2026 劉宜欣. All rights reserved.</p>
             
             <div>
-                <a href="mailto:your-email@gmail.com" class="email-link">
+                <a href="mailto:u11517012@go.utaipei.edu.tw" class="email-link">
                     ✉️ 聯絡信箱：u11517012@go.utaipei.edu.tw
                 </a>
             </div>
